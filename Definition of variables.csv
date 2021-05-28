@@ -1,0 +1,30 @@
+Variables,Descriptions,Cartegories
+author,First author,
+publication_year,Year of Publication,
+author_year,First author with year publication,
+review,Cochrane Systematic Review where RCT is from,"a=Afolabi et al, e= Esu et al, s= Sinclair et al, n= newly added"
+N,Total Sample size in RCT,
+age_group,Age groups,"a=adults, c =children, b=both"
+study continent,Study Continent,"Asia, Africa"
+c_malaria only,Whether RCT was conducted among participants with Cerebral malaria only ? ,"Yes, No"
+t,Abbreviation for treatments,"AMI= Artemisinin, ATT= Arteether, AME=Artemether, ASU=Artesunate, QN=Quinine"
+T,Treatments,"Artemisinin, Arteether, Artemether, Artesunate, Quinine"
+roa,Route of Administration,"IM= Intramuscular, IV= Intravenous, Parenteral, Rectal"
+mortality_e,Number of deaths,
+mortality_n,Total number assessed,
+crt_mean,Mean time in hours from start of treatment to coma recovery ,coma recovery time
+crt_sd,Standard deviation of mean of come recovery time ,
+crt_n,Total number assessed for coma recovery,
+pct_mean,Mean time in hours from start of treatment to a negative test ,parasite clearance time
+pct_sd,Standard deviation of mean of parasite clearance time,
+pct_n,Total number assessed for parasite clearance,
+fct_mean,Mean time in hours from start of treatment to resolution of fever,fever clearance time
+fct_sd,Standard deviation of mean of fever clearance time,
+fct_n,Total number assessed for fever clearance,
+neuro,Time of assessment of neurological sequaela events,"a=acute (discharge or day 7), p=persistent (28 days and beyond), n= not specified"
+neuro_e,Number of neurological sequela events ,
+neuro_n,Total number assessed for neurological sequaela events,
+hypoglycaemia_e,Number of hypogycaemia events,
+hypoglycaemia_n,Total number assessed for hypoglycaemia ,
+ecg_e,Number of electrocardiogram abnormalities events,eletrocardiogram abnormalities including QT prolongations and subventricular tachycardia
+ecg_n,Total number assessed for  electrocardiogram abnormalities,
