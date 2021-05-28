@@ -1,16 +1,19 @@
 # Comparative-Efficacy-and-Safety-of-the-Artemisinin-Derivatives-for-Severe-Malaria-Treatment
 
 Introduction
+
 This data was produced for a systematic review update and NMA was conducted according to the PRISMA guidelines extension.1 The NMA protocol was registered with PROSPERO registration number CRD420202181902 
 
 Search
+
 We included all published and unpublished RCTs from three Cochrane systematic reviews that compared artemisinin derivatives to quinine in treating severe malaria.3–5 In addition, we combined the search strategies of these previous reviews and updated them by searching the Cochrane Infectious Diseases Group Specialized Register; Cochrane Central Register of Controlled Trials (CENTRAL) in the Cochrane Library; MEDLINE, Embase, LILACS, ISI Web of Science, and trial registers from inception up to February 2021. Example of search strategy shown in S1. There were no limitations regarding language, geographical setting and year of publication.
 
 Method of Collection
+
 Screening the title and abstract, and full-text for eligible studies were completed in duplicate using Rayyan review software6 by the reviewing team independently, blinded to each other. Disagreements were resolved by the other co-reviewers.
 
 Outcomes
-Outcomes have pharmacological and clinical relevance. 
+
 Primary Outcome
 1.	Mortality.
 The proportion of death from all causes was compared between all interventions from onset of treatment.
@@ -36,9 +39,8 @@ For binary outcomes, the number of participants experiencing the event and the n
 Where medians and range or interquartile range were reported instead of the means and standard deviations, they were extracted and the arithmetic means and standard deviations were estimated from the medians and range or interquartile range respectively.7 These estimations were used for the main analysis and later excluded for sensitivity analyses. 
 
 Statistical Analyses
+
 Separate analyses were conducted for adults and children to reduce clinical inconsistency and heterogeneity. NMAs were conducted using a random effect model in a frequentist framework using R (version 3.6.0) netmeta package (version 1.2-1).8 Summary Risk Ratios (RR) for binary outcomes and Mean Differences (MD) for continuous outcomes with 95% confidence intervals (95%CI) were estimated for quinine and the artemisinin derivatives, against each other for all outcomes including hypoglycaemia.9 Network graphs were created with Stata 15 network map.10 League tables and forest plots were used to summarise effect sizes for all possible comparisons, outcomes and subgroups.8 Variability in the effects sizes was assessed globally for the whole network and locally at each possible study design, and it was described with Q and I2 statistics, degrees of freedom, and p-values. Variability in the effect sizes was further decomposed into within-design (heterogeneity) and between-design (inconsistency). Hotspots of inconsistency were identified with net-splitting and net heat plots.11,12 Probability scores (p-scores) were used to rank treatments for each outcome.13 Data from adults and children were combined to conduct subgroup analyses by severe malaria type, study continent, and time point of neurological sequela events. We used Eggers test and a comparison-adjusted funnel plot that incorporates all the effects of bias in a network to assess publication bias.8 All statistical tests were two-sided with a significance level of 0.05.
-
-
 
 
 Full Bibliography with study references
