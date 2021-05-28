@@ -1,0 +1,69 @@
+
+        ## Hasse diagrams
+        
+        
+        ##  Ranking of treatments among children using a Hasse diagram
+        
+        
+        #P-scores 
+        pscore.deathc  <-c(0.4616, 0.3894, 0.6862, 0.7428, 0.2199)
+        pscore.neuroc <- c(0.3708, 0.6746, 0.4580, 0.3516, 0.6450) 
+        pscore.pctc  <-  c(0.9950, 0.5740, 0.1471, 0.6481, 0.1359) 
+        pscore.crtc  <-  c(0.6900, 0.8196, 0.3294, 0.1194, 0.5463) 
+        pscores.fctc <-  c(0.8627, 0.7755, 0.1683, 0.3252, 0.3682)
+        #	Construct matrix with P-scores
+        pscore.matrixc<-data.frame(pscore.deathc, pscore.crtc,pscore.pctc, pscores.fctc)
+        
+        
+        # Partial order of treatment rankings of mortality, neuro sequela, crt and pct
+        netc<-netposet(pscore.matrixc)
+        netc
+        
+        #	Construct a logical matrix for poset outcome
+        netsetc<- matrix(c(rep(0,20),rep(1,2),rep(0,3)),5,5)
+        netsetc<-as.logical(netsetc)
+        netc<-matrix(netsetc,5,5)
+        
+        #	Construct Hasse Diagram
+        
+        tiff("Hasse Diagram Children.tiff",
+             width = 2000, height = 2000, res = 600, compression = "lzw")
+        
+        hasse(netc, c("Artemisinin;AMI", "Artemether;AME", "Arteether:ATE", "Artesunate;ASU","Quinine;QN"))
+        
+        dev.off()
+           
+        
+        ##Ranking of treatments among adults using a Hasse diagram
+        
+        # P-scores 
+        pscore.deatha<-  c(0.3650, 0.7288, 0.8715, 0.1791)
+        pscore.crta  <-  c(0.6580, 0.2038, 0.5580, 0.5802) 
+        pscore.pcta  <-  c(0.3650, 0.9773, 0.4787, 0.1791) 
+        pscores.fcta <-  c(0.2252, 0.3628, 0.9265, 0.4855)
+        pscore.neuroa <- c(0.000, 0.2431, 0.000, 0.7569)
+        
+        # Construct matrix with P-scores
+        pscore.matrixa<-data.frame(pscore.deatha, pscore.crta,pscore.pcta, pscores.fcta)
+        
+        # Partial order of treatment rankings of mortality, neuro sequela, crt and pct
+        neta<-netposet(pscore.matrixa)
+        
+        
+        #	Convert to a logical matrix
+        netseta<- matrix(c(rep(0,16)),4,4)
+        netseta<-as.logical(netseta)
+        neta<-matrix(netseta,4,4)
+        
+        #	Construct Hasse Diagram
+        tiff("Hasse diagram Adults.tiff",
+             width = 2000, height = 1000, res = 600, compression = "lzw")
+        
+        hasse(neta, c("Artemisinin;AMI", "Artemether;AME", "Artesunate;ASU","Quinine;QN"))
+        
+        
+        dev.off()
+        
+      
+        
+        
