@@ -1224,393 +1224,42 @@ forest(nma4a,
 
 fd<- grid.grab()
 
-## Hypoglycaemia events for children and adults combine
 
 
-#Ranking of hypoglycaemia events for children and adults combined
-netrank(nma5, small.values = "good")
+tiff("Figure 4.tiff",
+     width = 10000, height = 6000, res = 600, compression = "lzw")
 
+grid.arrange(fa, fb, fc, fd, ncol = 2, nrow = 2)
 
+dev.off ()
 
- 						## Hasse diagrams
 
 
-## Figure 17. Ranking of treatments among children using a Hasse diagram
 
+         ###  Sensitivity Analyses###
 
-#P-scores 
-pscore.deathc  <-c(0.8517, 0.2472, 0.5986, 0.6468, 0.1557)
-pscore.neuroc <- c(0.3740, 0.6469, 0.4617, 0.3551, 0.6596) 
-pscore.pctc  <-  c(0.9945, 0.5610, 0.1330, 0.6646, 0.1469) 
-pscore.crtc  <-  c(0.7048, 0.7048, 0.3893, 0.1148, 0.5071) 
 
-#	Construct matrix with P-scores
-pscore.matrixc<-data.frame(pscore.deathc, pscore.crtc,pscore.pctc)
 
-
-# Partial order of treatment rankings of mortality, neuro sequela, crt and pct
-netc<-netposet(pscore.matrixc)
-
-#	Construct a logical matrix for poset outcome
-netsetc<- matrix(c(rep(0,5),1,rep(0,4),1,rep(0,4),1,rep(0,5),1,0,0,0),5,5)
-netsetc<-as.logical(netsetc)
-netc<-matrix(netsetc,5,5)
-
-#	Construct Hasse Diagram
-
-tiff("Fig17.tiff",
-     width = 6000, height = 6000, res = 600, compression = "lzw")
-
-hasse(netc, c("Artemisinin;AMI", "Artemether;AME", "Arteether:ATE", "Artesunate;ASU","Quinine;QN"))
-
-dev.off()
-
-
-
-	##	Figure 19. Ranking of treatments among adults using a Hasse diagram
-
-# P-scores 
-pscore.deatha  <-c(0.2452, 0.7554, 0.8312, 0.1682)
-pscore.neuroa <- c(0.000, 0.2431, 0.000, 0.7569) 
-pscore.crta  <-  c(0.5305, 0.2610, 0.8889, 0.3196) 
-pscore.pcta  <-  c(0.7302, 0.4247,0.8111, 0.0341) 
-
-
-# Construct matrix with P-scores
-pscore.matrixa<-data.frame(pscore.deatha, pscore.crta,pscore.pcta)
-
-# Partial order of treatment rankings of mortality, neuro sequela, crt and pct
-neta<-netposet(pscore.matrixa)
-neta
-
-
-#	Convert to a logical matrix
-netseta<- matrix(c(rep(0,2),1,rep(0,3),1,rep(0,5),1,rep(0,3)),4,4)
-netseta<-as.logical(netseta)
-neta<-matrix(netseta,4,4)
-
-#	Construct Hasse Diagram
-tiff("Fig19.tiff",
-     width = 6000, height = 6000, res = 600, compression = "lzw")
-
-hasse(neta, c("Artemisinin;AMI", "Artemether;AME", "Artesunate;ASU","Quinine;QN"))
-
-
-dev.off()
-
-
-
-
-         ###	5.8 Sensitivity Analyses###
-
-nma3<-netmeta(TE,
-              seTE,
-              treat1,
-              treat2,
-              studlab,
-              netpara,
-              sm = "MD",
-              comb.fixed = FALSE,
-              prediction=T,
-              reference.group = "Quinine",
-              sep.trt="vs",
-              details.chkmultiarm = T)
-              
-
-# Produce League table in CSV format
-leaguepara <- netleague(nma3, bracket = "(", digits=2)
-write.csv(leaguepara$random, "leaguepara2.csv")
-
-
-#  Investigating heterogeneity and inconsistency:
-decomp.design(nma3)
-
-# Detailed output of direct evidence vs indirect evidence
-print(netsplit(nma3), digits = 2, ci = TRUE, test = T)
-
-# Figure 22. Forest Plot comparing Direct and Indirect Evidence among Lumped Population for parasite clearance time
-#  Use a forest plot to graphically contrast the results using the
-#  direct evidence vs indirect evidence:
-ns<- netsplit(nma3)
-
-tiff("Fig22.tiff",
-     width = 6000, height = 4000, res = 600, compression = "lzw")
-forest(ns,
-       prediction = F,
-       overall = F,
-       colgap.left="18mm",
-       plotwidth="9cm",
-       spacing= 1,
-       fontsize=14,
-       leftcols = c("studlab","k"))
-
-dev.off()
-
-# heatplot
-tiff("Fig22.tiff",
-     width = 9000, height = 8500, res = 600, compression = "lzw")
-
-netheat(nma3,
-        showall = T,
-        random = T)
-
-dev.off()
-
-
-
-
-##  Neurological Sequela Events
-
-nma4 <- netmeta(TE,
-                seTE,
-                treat1,
-                treat2,
-                studlab,
-                netneuro,
-                sm = "RR",
-                comb.fixed = FALSE,
-                prediction=T,
-                reference.group = "Quinine",
-                sep.trt="vs",
-                details.chkmultiarm = T)
-
-# Produce League table in CSV format
-leagueneuro <- netleague(nma4, bracket = "(", digits=2)
-write.csv(leagueneuro$random, "leagueneuro.csv")
-
-#  Investigating heterogeneity and inconsistency:
-decomp.design(nma4a)
-
-# Detailed output of direct evidence vs indirect evidence
-print(netsplit(nma4a), digits = 2, ci = TRUE, test = T)
-
-# Use a forest plot to graphically contrast the results using the
-# direct evidence vs indirect evidence:
-forest(netsplit(nma4a))
-
-
-
-## Ranking and Forest plot
-
-
-# Mortality
-
-tiff("Fig25a.tiff",
-     width = 6720, height = 3840, res = 600, compression = "lzw")
-
-forest(nma1,
-       xlim = c(0.3,2),
-       smlab = "A) Mortality",
-       small.values = "good",
-       reference.group = "Quinine",
-       just.smlab = "left",
-       leftcols =c("studlab","Pscore"),
-       sortvar = -Pscore,
-       col.square= "blue",
-       col.square.lines = "blue",
-       fontsize =16,
-       plotwidth = "9cm",
-       colgap.left="4mm",
-       spacing= 3,
-       print.I2= F,
-       print.pval.Q=F,
-       hetlab= " ",
-       label.left = "favours treatment",
-       label.right= "favours quinine",
-       fs.smlab = 20, ff.smlab = "bold",
-       fs.study.labels= 16, ff.study.labels = "bold",
-       fs.axis = 9,
- 
-)
-
-dev.off()
-
-
-# Coma Recovery Time
-
-tiff("Fig25b.tiff",
-     width = 6720, height = 3840, res = 600, compression = "lzw")
-
-forest(nma2,
-       xlim = c(-40,30),
-       smlab = "B) Coma Recovery Time",
-       small.values = "good",
-       reference.group = "Quinine",
-       just.smlab = "left",
-       leftcols =c("studlab","Pscore"),
-       sortvar = -Pscore,
-       col.square= "blue",
-       col.square.lines = "blue",
-       fontsize =16,
-       plotwidth = "9cm",
-       colgap.left="4mm",
-       spacing= 3,
-       print.I2= F,
-       print.pval.Q=F,
-       hetlab= " ",
-       label.left = "favours treatment",
-       label.right= "favours quinine",
-       fs.smlab = 20, ff.smlab = "bold",
-       fs.study.labels= 16, ff.study.labels = "bold",
-       fs.axis = 9
-     
-)
-
-dev.off()
-
-# Parasite Clearence time
-
-tiff("Fig25c.tiff",
-     width = 6720, height = 3840, res = 600, compression = "lzw")
-     
-forest(nma3,
-       xlim = c(-40,20),
-       smlab = " C) Parasite Clearance Time",
-       small.values = "good",
-       reference.group = "Quinine",
-       just.smlab = "left",
-       leftcols =c("studlab","Pscore"),
-       sortvar = -Pscore,
-       col.square= "blue",
-       col.square.lines = "blue",
-       fontsize =16,
-       plotwidth = "9.5cm",
-       colgap.left="4mm",
-       spacing= 3,
-       print.I2= F,
-       print.pval.Q=F,
-       hetlab= " ",
-       label.left = "favours treatment",
-       label.right= "favours quinine",
-       fs.smlab = 20, ff.smlab = "bold",
-       fs.study.labels= 16, ff.study.labels = "bold",
-       fs.axis = 9,
-     
-)
-
-dev.off()
-
-
-# Neurological sequela events
-
-tiff("Fig25d.tiff",
-     width = 6720, height = 3840, res = 600, compression = "lzw")
-     
-forest(nma4,
-       xlim = c(0.05,80),
-       smlab = "D) Neurological Sequela Events",
-       small.values = "good",
-       reference.group = "Quinine",
-       just.smlab = "left",
-       leftcols =c("studlab","Pscore"),
-       sortvar = -Pscore,
-       col.square= "blue",
-       col.square.lines = "blue",
-       fontsize =16,
-       plotwidth = "9.5cm",
-       colgap.left="4mm",
-       spacing= 3,
-       print.I2= F,
-       print.pval.Q=F,
-       hetlab= " ",
-       label.left = "favours treatment",
-       label.right= "favours quinine",
-       fs.smlab = 18, ff.smlab = "bold",
-       fs.study.labels= 16, ff.study.labels = "bold",
-       fs.axis = 9,
-      
-)
-
-dev.off()
-
-
-
-
-# Ranking of treatments in the lumped population using a Hasse diagram based on mortality, coma recovery time and parasite clearance time.
-
-# P-scores 
-pscore.death  <-c(0.3145, 0.5060, 0.7045, 0.8058, 0.1693)
-pscore.neuro <- c(0.3721, 0.6577, 0.4599, 0.3529, 0.6573) 
-pscore.crt  <-  c(0.8412, 0.5852, 0.1576, 0.6323, 0.2837) 
-pscore.pct  <-  c(0.9417, 0.4824, 0.1425, 0.7964, 0.1370) 
-
-
-
-# Death, Parasite Clerance Time And Coma Recovery Time
-
-
-# Construct matrix with P-scores
-pscore.matrix<-data.frame(pscore.death, pscore.crt, pscore.pct)
-
-
-# Partial order of treatment rankings of mortality, neuro sequela, crt and pct
-net<-netposet(pscore.matrix)
-
-
-# Convert poset outcome to logical matrix
-netset<- matrix(c(rep(0,8),1,rep(0,4),1,rep(0,6),1,1,0,0,0),5,5)
-netset<-as.logical(netset)
-net<-matrix(netset,5,5)
-
-# Construct  Hasse daigram
-
-tiff("Fig24.tiff",
-     width = 6000, height = 5000, res = 600, compression = "lzw")
-
-hasse(net, c("Artemisinin;AMI", "Artemether;AME", "Arteether:ATE", "Artesunate;ASU","Quinine;QN"))
-
-dev.off()
-
-
-
-
-
-### 5.8.3 Figure 26.Ranking based on mortality, coma recovery time, parasite clearance time and neurological sequela events and hypoglycaemia events###
-
-# P-scores 
-pscore.death  <-c(0.3145, 0.5060, 0.7045, 0.8058, 0.1693)
-pscore.neuro <- c(0.3721, 0.6577, 0.4599, 0.3529, 0.6573) 
-pscore.crt  <-  c(0.8412, 0.5852, 0.1576, 0.6323, 0.2837) 
-pscore.pct  <-  c(0.9417, 0.4824, 0.1425, 0.7964, 0.1370) 
-pscores.hypo<-  c(0.8518, 0.6821, 0.0000, 0.4589, 0.0071)
-
-
-# Construct matrix with P-scores
-pscore.matrix<-data.frame(pscore.death,pscore.neuro, pscore.crt, pscore.pct,pscores.hypo)
-
-# Partial order of treatment rankings of mortality, neuro sequela, crt, pct and hypoglycaemia
-net<-netposet(pscore.matrix)
-net
-
-
-# Convert to a logical matrix
-netset<- matrix(c(rep(0,21),1,rep(0,3)),5,5)
-netset<-as.logical(netset)
-net<-matrix(netset,5,5)
-
-# Construct a Hasse daigram
- 
-tiff("Fig26.tiff",
-     width = 5000, height = 4000, res = 600, compression = "lzw")
-
-hasse(net, c("Artemisinin;AMI", "Artemether;AME", "Arteether:ATE", "Artesunate;ASU","Quinine;QN"))
-
-dev.off()
-
-
-
-
-
-
-
-
-
-
-###5.8.5 Comparing Reported Means and Standard Deviations Only with Analyses That Included Approximations
+### Comparing Reported Means and Standard Deviations Only with Analyses That Included Approximations
 
 ## Coma Recovery Time 
+#Fit a NMA model for Approximation
 
-
+  nma2<-netmeta(TE,
+                      seTE,
+                      treat1,
+                      treat2,
+                      studlab,
+                      netcoma,
+                      sm = "MD",
+                      comb.fixed = FALSE,
+                      prediction=T,
+                      reference.group = "Quinine",
+                      seq = c("Artemisinin","Artemether","Artesunate","Arteether", "Quinine"),
+                      sep.trt=" vs ",
+                      details.chkmultiarm = T)
+		      
+		      
 #Fit a NMA model for dataset that includes only reported means and sds
 
 netcrt<- pairwise(treat=T,
@@ -1621,8 +1270,6 @@ netcrt<- pairwise(treat=T,
                     studlab = author_year,
                     sm = "MD",
                     allstudies =T )
-
-
 
 nma8<-netmeta(TE,
                 seTE,
@@ -1668,7 +1315,19 @@ nbc<- grid.grab()
 
 ## Parasite Clearance Time 
 
-
+#Fit a NMA model for Approximations
+nma3<-netmeta(TE,
+              seTE,
+              treat1,
+              treat2,
+              studlab,
+              netpara,
+              sm = "MD",
+              comb.fixed = FALSE,
+              prediction=T,
+              reference.group = "Quinine",
+              sep.trt="vs",
+              details.chkmultiarm = T)
 #Fit a NMA model for dataset that includes only reported means and sds
 
 netpct<- pairwise(treat=T,
@@ -1679,7 +1338,6 @@ netpct<- pairwise(treat=T,
                     studlab = author_year,
                     sm = "MD",
                     allstudies =T )
-
 
 nma9<-netmeta(TE,
                seTE,
@@ -1722,19 +1380,99 @@ forest(nb2,
 # layout
 nbp<- grid.grab()
 
+
+
+
+## Fever Clearance Time 
+
+#Fit a NMA model for Approximations
+nma4<-netmeta(TE,
+              seTE,
+              treat1,
+              treat2,
+              studlab,
+              netfever,
+              sm = "MD",
+              comb.fixed = FALSE,
+               prediction=T,
+               reference.group = "Quinine",
+               seq = c("Artemisinin","Artemether","Artesunate","Arteether", "Quinine"),
+               sep.trt=" vs ",
+               details.chkmultiarm = T)
+        
+	       	
+                      
+#Fit a NMA model for dataset that includes only reported means and sds
+
+netfct<- pairwise(treat=T,
+                    n = fct_n,
+                    mean=fct_mean,
+                    sd=fct_sd,
+                    data = datax,
+                    studlab = author_year,
+                    sm = "MD",
+                    allstudies =T )
+
+nma10<-netmeta(TE,
+               seTE,
+               treat1,
+               treat2,
+               studlab,
+               netfct,
+               sm = "MD",
+               comb.fixed = FALSE,
+               prediction=T,
+               reference.group = "Quinine",
+               sep.trt="vs",
+               details.chkmultiarm = T)
+
+
+  # Forest Plots comparing reported means and standard deviations only with analyses that included approximations.
+
+nb4 <- netbind(nma10, nma4,
+               name = c(" Reported means and sds only ", " Reported means and sds with approximations"),
+               col.study = c("red", "black"),
+               col.square = c("red", "black"))
+
+
+# forest plot
+forest(nb4, 
+       col.by="black",
+       addrow.subgroups = T,
+       plotwidth = "11cm",
+       colgap.left="4mm",
+       colgap.right="4mm",
+       leftlabs = "Treatment",
+       smlab = "Fever Clearance Time",
+       fontsize = 18, 
+       spacing = 2, 
+       squaresize = 0.7,
+       label.left = "favours treatment",
+       label.right = "favours quinine",
+       fs.smlab=24)
+
+# layout
+nb4<- grid.grab()
+
+
+
 # Figure 28. Combine forest plots
 
-tiff("Fig28.tiff",
+tiff("S13",
      width = 10000, height = 10000, res = 600, compression = "lzw")
-grid.arrange(nbc,nbp, ncol = 1, nrow = 2)
+grid.arrange(nbc,nbp,nb4 ncol = 1, nrow = 3)
 
 dev.off()
 
-                 ###  5.9 Subgroup Analyses
 
 
 
- ##  5.9.1 Cerebral malaria only vs Non-specified severe malaria 
+
+                 ###   Subgroup Analyses
+
+
+
+ ##  Cerebral malaria only vs Non-specified severe malaria 
 
 # Cerebral Malaria only
 netcereb<- pairwise(treat = T,
@@ -1747,7 +1485,7 @@ netcereb<- pairwise(treat = T,
 
 
 
-nma10 <- netmeta(TE,
+nma11 <- netmeta(TE,
                 seTE,
                 treat1,
                 treat2,
@@ -1778,7 +1516,7 @@ forest(nmay,
 
       ## Non specified Malaria
 
-nma11 <- netmeta(TE,
+nma12 <- netmeta(TE,
                 seTE,
                 treat1,
                 treat2,
@@ -1809,7 +1547,7 @@ forest(nman,
 
 
 
-##  5.9.2 Asia vs Africa
+##  Asia vs Africa
 
 #Africa
 
@@ -1837,7 +1575,6 @@ write.csv(leagueAf$random, "leagueAf.csv")
 forest(nmAf, 
        reference.group = "QN",
        col.square = "blue")
-
 
 
 # Asia
@@ -1868,7 +1605,7 @@ forest(nmAs,
 
 
 
-### 5.9.3 Acute vs Persistent Neurological Sequela
+### Acute vs Persistent Neurological Sequela
 
 netneurolo<- pairwise(treat = T,
                       event = neuro_e,
@@ -1938,14 +1675,14 @@ forest(nmaper,
 
 
 
-                                            ### 5.10 Assessing Publication Bias
+                                            ### Assessing Publication Bias
 
 #create order for funnel plot
 ord<- c('AMI',"AME","ATE","ASU","QN")
 
-#Figure 29. Funnel plot 
+# Funnel plot 
 
-tiff("Fig29.tiff",
+tiff("Figure 5.tiff",
      width = 10000, height = 10000, res = 600, compression = "lzw")
 oldpar <- par(mfrow = c(2, 1))
 
